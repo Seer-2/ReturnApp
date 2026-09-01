@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - "RETURN-AppStoreReady.zip"
+      - ".github/workflows/unpack-source.yml"
   workflow_dispatch:
 
 permissions:
