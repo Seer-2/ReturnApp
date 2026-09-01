@@ -1,0 +1,99 @@
+name: ReturnApp
+options:
+  bundleIdPrefix: com.returnfocus
+  createIntermediateGroups: true
+settings:
+  base:
+    IPHONEOS_DEPLOYMENT_TARGET: 17.0
+    SWIFT_VERSION: 5.0
+    DEVELOPMENT_TEAM: ""
+    CODE_SIGN_STYLE: Automatic
+    MARKETING_VERSION: 1.0.0
+    CURRENT_PROJECT_VERSION: 1
+    VERSIONING_SYSTEM: apple-generic
+    ENABLE_USER_SCRIPT_SANDBOXING: YES
+    SUPPORTS_MACCATALYST: NO
+    TARGETED_DEVICE_FAMILY: 1
+
+targets:
+  ReturnApp:
+    type: application
+    platform: iOS
+    sources:
+      - ReturnApp
+      - path: Shared/SharedScreenTime.swift
+    info:
+      path: ReturnApp/Info.plist
+    entitlements:
+      path: ReturnApp/ReturnApp.entitlements
+    dependencies:
+      - target: DeviceActivityMonitorExtension
+      - target: ShieldConfigurationExtension
+      - target: ShieldActionExtension
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.returnfocus.app
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+
+  DeviceActivityMonitorExtension:
+    type: app-extension
+    platform: iOS
+    sources:
+      - DeviceActivityMonitorExtension
+      - path: Shared/SharedScreenTime.swift
+    info:
+      path: DeviceActivityMonitorExtension/Info.plist
+    entitlements:
+      path: DeviceActivityMonitorExtension/DeviceActivityMonitorExtension.entitlements
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.returnfocus.app.DeviceActivityMonitor
+        SKIP_INSTALL: YES
+
+  ShieldConfigurationExtension:
+    type: app-extension
+    platform: iOS
+    sources:
+      - ShieldConfigurationExtension
+    info:
+      path: ShieldConfigurationExtension/Info.plist
+    entitlements:
+      path: ShieldConfigurationExtension/ShieldConfigurationExtension.entitlements
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.returnfocus.app.ShieldConfiguration
+        SKIP_INSTALL: YES
+
+  ShieldActionExtension:
+    type: app-extension
+    platform: iOS
+    sources:
+      - ShieldActionExtension
+    info:
+      path: ShieldActionExtension/Info.plist
+    entitlements:
+      path: ShieldActionExtension/ShieldActionExtension.entitlements
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.returnfocus.app.ShieldAction
+        SKIP_INSTALL: YES
+
+  ReturnAppTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - ReturnAppTests
+    dependencies:
+      - target: ReturnApp
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.returnfocus.app.tests
+
+schemes:
+  ReturnApp:
+    build:
+      targets:
+        ReturnApp: all
+    test:
+      targets:
+        - ReturnAppTests
